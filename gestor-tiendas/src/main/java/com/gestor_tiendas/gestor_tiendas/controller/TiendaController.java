@@ -55,6 +55,14 @@ public class TiendaController {
 
     }
 
+    @PostMapping("/bulk")   // bulk post mapping, se refiere a cargar, guardar volumenes de datos
+    public ResponseEntity<List<Tienda>> saveAllStores(@RequestBody List<Tienda> listaTiendas) {
+        List<Tienda> tiendasGuardadas = this.tiendaService.saveAllTiendas(listaTiendas);
+        return ResponseEntity.ok(tiendasGuardadas);
+
+    }
+
+
     @PutMapping("/{idTienda}")
     public ResponseEntity<Tienda> putStore(@PathVariable Integer idTienda, @RequestBody Tienda tienda) {
         try {

@@ -31,6 +31,11 @@ public class TiendaService {
         return this.tiendaRepository.save(tienda);
     }
 
+    public List<Tienda> saveAllTiendas(List<Tienda> listaTiendas) {
+        return this.tiendaRepository.saveAll(listaTiendas);
+        
+    }
+
     public void deleteById(Long idTiendaBorrar) {
         this.tiendaRepository.deleteById(idTiendaBorrar);
         
