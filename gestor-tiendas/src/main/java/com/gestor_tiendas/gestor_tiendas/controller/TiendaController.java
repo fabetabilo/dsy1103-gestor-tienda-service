@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
@@ -107,18 +108,19 @@ public class TiendaController {
     }
 
 
-    @GetMapping("/ciudad/{ciudadBuscar}")
-    public ResponseEntity<List<Tienda>> getStoresByCity(@PathVariable String ciudadBuscar) {
-        List<Tienda> tiendasCiudad = this.tiendaService.findByCiudad(ciudadBuscar);
+
+    @GetMapping("/ciudad")
+    public ResponseEntity<List<Tienda>> getStoresByCityIgnoringCase(@RequestParam(name = "ciudad") String ciudadBuscar) {
+        // Ejemplo: http://localhost:8080/api/v1/tiendas/ciudad?ciudad=valparaiso
+        List<Tienda> tiendasCiudad = this.tiendaService.findByCiudadIgnoringCase(ciudadBuscar);
         if (tiendasCiudad.isEmpty()) {
+            // Si no encuentra tiendas para esa ciudad, la lista esta vacia, =>
             return ResponseEntity.noContent().build();
 
         }
         return ResponseEntity.ok(tiendasCiudad);
-    
+
     }
-
-
 
 
 

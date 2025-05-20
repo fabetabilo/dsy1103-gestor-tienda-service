@@ -25,12 +25,20 @@ public interface TiendaRepository extends JpaRepository<Tienda, Long>{
     • findAll(Sort sort): Encuentra todas las entidades con ordenación.
     */
 
-    /** Metodo para buscar por ciudad
+
+    /** Metodo para buscar tiendas por ciudad
+     *  Este metodo ignora mayusculas y minusculas dentro del parametro, y
+     *  realiza una busqueda de una cadena dentro de otra
      * 
-     * @param city String: ciudad a buscar
-     * @return List: con las tiendas de la ciudad
+     *  Gracias a las caracteristicas de Spring Data JPA, Containing y IgnoreCase generan una consulta SQL
+     *  basada en el nombre del metodo. Usa descriptores de consulta, entonces Spring Data JPA, sabra como
+     *  generar la consulta SQL.
+     * 
+     * @param ciudad Ciudad en la que buscar tiendas
+     * @return Lista con las tiendas que pertenecen al parametro ciudad
      */
-    List<Tienda> findByCiudad(String ciudad);
+    List<Tienda> findByCiudadContainingIgnoreCase(String ciudad);
+
 
 
 

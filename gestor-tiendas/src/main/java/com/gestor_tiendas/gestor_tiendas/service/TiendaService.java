@@ -55,10 +55,11 @@ public class TiendaService {
 
     }
 
-    public List<Tienda> findByCiudad(String ciudad) {
-        return this.tiendaRepository.findByCiudad(ciudad);
-    }
 
+
+    public List<Tienda> findByCiudadIgnoringCase(String ciudad) {
+        return this.tiendaRepository.findByCiudadContainingIgnoreCase(ciudad);
+    }
 
 
 
