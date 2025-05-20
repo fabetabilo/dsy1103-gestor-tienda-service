@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,6 +46,9 @@ public class Tienda {
     @Column(nullable = false)
     private LocalTime horaCierre;
     
+    @ManyToOne
+    @JoinColumn(name = "codigo_region", referencedColumnName = "codigoRegion", nullable = false)
+    private Region region;          // region a la que pertenece la tienda
 
 
 }
