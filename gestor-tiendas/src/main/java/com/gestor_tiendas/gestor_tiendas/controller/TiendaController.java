@@ -78,9 +78,15 @@ public class TiendaController {
      */
     @PostMapping
     public ResponseEntity<Tienda> saveNewStore(@RequestBody Tienda tienda) {
-        Tienda tiendaPost = this.tiendaService.saveTienda(tienda);
-        return ResponseEntity.status(HttpStatus.CREATED).body(tiendaPost);
+        try {
+            Tienda tiendaPost = this.tiendaService.saveTienda(tienda);
+            return ResponseEntity.status(HttpStatus.CREATED).body(tiendaPost);
 
+        } catch (Exception e) {
+            // Maneja una excepcion, en caso de que el cuerpo Body ingresado sea invalido
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
     }
 
 
@@ -94,9 +100,14 @@ public class TiendaController {
      */
     @PostMapping("/bulk")
     public ResponseEntity<List<Tienda>> saveAllStores(@RequestBody List<Tienda> listaTiendas) {
-        List<Tienda> tiendasGuardadas = this.tiendaService.saveAllTiendas(listaTiendas);
-        return ResponseEntity.ok(tiendasGuardadas);
+        try {
+            List<Tienda> tiendasGuardadas = this.tiendaService.saveAllTiendas(listaTiendas);
+            return ResponseEntity.ok(tiendasGuardadas);
 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
     }
 
     /**
