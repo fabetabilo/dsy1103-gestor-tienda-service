@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 import com.gestor_tiendas.gestor_tiendas.repository.TiendaRepository;
 
@@ -62,5 +63,9 @@ public class TiendaService {
     }
 
 
+    public List<Tienda> findByRegion(Region regionBuscar) {
+        return this.tiendaRepository.findByRegion(regionBuscar);
+        
+    }
 
 }

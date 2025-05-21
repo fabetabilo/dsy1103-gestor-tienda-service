@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 
 @Repository
@@ -40,7 +41,7 @@ public interface TiendaRepository extends JpaRepository<Tienda, Long>{
     List<Tienda> findByCiudadContainingIgnoreCase(String ciudad);
 
 
-
+    List<Tienda> findByRegion(Region region);
 
 
 

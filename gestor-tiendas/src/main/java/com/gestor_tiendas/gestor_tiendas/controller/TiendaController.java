@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 import com.gestor_tiendas.gestor_tiendas.service.TiendaService;
 
@@ -122,8 +123,17 @@ public class TiendaController {
 
     }
 
+    @GetMapping("/region/{codigoRegion}")
+    public ResponseEntity<List<Tienda>> getStoresByRegion(@PathVariable Integer codigoRegion) {
+        Region region = new Region();
+        region.setCodigoRegion(codigoRegion);
+        List<Tienda> listaTiendasCiu = this.tiendaService.findByRegion(region);
+        if (listaTiendasCiu.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(listaTiendasCiu);
 
-
+    }
 
 
 
