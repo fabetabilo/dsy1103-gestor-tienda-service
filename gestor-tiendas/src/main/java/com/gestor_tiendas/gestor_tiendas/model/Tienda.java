@@ -37,7 +37,7 @@ public class Tienda {
     @Column(nullable = false, unique = true)    // restriccion: UK (debe ser unico), cada tienda tendra su numero contacto
     private int telefono;
 
-    @Column(length = 50, unique = true)         // restriccion: UK (debe ser unico), cada tienda tendra su correo
+    @Column(length = 50, nullable = false, unique = true)         // restriccion: UK (debe ser unico), cada tienda tendra su correo
     private String correo;
     
     @Column(nullable = false)

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Region {
 
     /* Nota
-     * columnDefinition: define la columna de la base de datos
+     * columnDefinition: define la columna en la base de datos
      * MySQL: INT(5)
      * ORACLE: NUMBER(5)
      */
@@ -24,7 +24,7 @@ public class Region {
     @Column(columnDefinition = "NUMBER(3)")
     private Integer codigoRegion;              // segun CODIGOS UNICOS TERRITORIALES, Chile, 3 digitos
 
-    @Column(length = 70)
+    @Column(length = 70, nullable = false)
     private String nombreRegion;
 
     

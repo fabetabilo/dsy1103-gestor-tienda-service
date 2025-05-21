@@ -1,6 +1,18 @@
 Cuerpo POST, PUT:
--Los ID son administrados en la base de datos (NEXT.VAL - autoincrementales)
+-Los ID de tienda son administrados en la base de datos (NEXT.VAL - autoincrementales)
 -La hora funciona sin problema
+
+
+
+PUT /{idTienda}/horario
+	--Para modificar horarios, incluye solo el cuerpo de los horarios nuevos
+	
+{
+    "horaApertura": "10:00:00",
+    "horaCierre": "15:00:00"
+}
+
+
 
 
 POST-PUT, para (1) Recurso
@@ -18,6 +30,10 @@ POST-PUT, para (1) Recurso
             "nombreRegion": "Región de Valparaíso"
         }
     }
+    
+    
+
+    
     
 POST /bulk para (n) Recursos
 
