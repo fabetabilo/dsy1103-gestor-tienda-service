@@ -1,0 +1,51 @@
+USE db_gestor_tienda;
+
+INSERT INTO region (codigo_region, nombre_region) VALUES
+(1, 'Región de Tarapacá'),
+(2, 'Región de Antofagasta'),
+(3, 'Región de Atacama'),
+(4, 'Región de Coquimbo'),
+(5, 'Región de Valparaíso'),
+(6, 'Región del Libertador Gral. Bernardo O.Higgins'),
+(7, 'Región del Maule'),
+(8, 'Región del Biobío'),
+(9, 'Región de la Araucanía'),
+(10, 'Región de los Lagos'),
+(11, 'Región de Aisén del Gral. Carlos Ibanez del Campo'),
+(12, 'Región de Magallanes y de la Antártica Chilena'),
+(13, 'Región Metropolitana de Santiago'),
+(14, 'Región de Los Ríos'),
+(15, 'Región de Arica y Parinacota'),
+(16, 'Región de Nuble');
+
+INSERT INTO tienda (ciudad, correo, direccion, hora_apertura, hora_cierre, nombre, telefono, codigo_region) VALUES 
+(
+    'Santiago',
+    'contactolastarria@ecomarket.cl',
+    'Villavicencio 456, Barrio Lastarria',
+    '09:00:00',
+    '18:00:00',
+    'EcoMarket SPA Casa Matriz Barrio Lastarria',
+    234500250,
+    13
+),
+(
+    'Valdivia',
+    'contactovaldivia@ecomarket.cl',
+    'Av. Arturo Pratt 1287',
+    '10:00:00',
+    '20:00:00',
+    'EcoMarket SPA Valdivia',
+    234500251,
+    14
+),
+(
+    'Antofagasta',
+    'contactoantofagasta@ecomarket.cl',
+    'Moradores 5456',
+    '08:30:00',
+    '18:30:00',
+    'EcoMarket SPA Antofagasta',
+    234500252,
+    2
+);

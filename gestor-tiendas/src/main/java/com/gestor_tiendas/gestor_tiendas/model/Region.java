@@ -21,7 +21,7 @@ public class Region {
      * ORACLE: NUMBER(5)
      */
     @Id
-    @Column(columnDefinition = "NUMBER(3)")
+    @Column(columnDefinition = "INT(3)")
     private Integer codigoRegion;              // segun CODIGOS UNICOS TERRITORIALES, Chile, 3 digitos
 
     @Column(length = 70, nullable = false)

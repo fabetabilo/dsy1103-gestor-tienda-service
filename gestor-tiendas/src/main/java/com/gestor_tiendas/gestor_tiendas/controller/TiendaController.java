@@ -20,7 +20,7 @@ import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 import com.gestor_tiendas.gestor_tiendas.service.TiendaService;
 
 @RestController
-@RequestMapping("/api/v1/tiendas")
+@RequestMapping("/api/v1/tienda")
 public class TiendaController {
 
     @Autowired
