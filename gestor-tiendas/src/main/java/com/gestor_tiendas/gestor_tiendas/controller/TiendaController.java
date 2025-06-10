@@ -148,7 +148,7 @@ public class TiendaController {
      * @return ResponseEntity sin contenido (HTTP 204 No Content) tienda borrada con exito, o ResponseEntity contenido no encontrado (HTTP 404 Not Found) tienda no existe
      */
     @DeleteMapping("/{idTienda}")
-    public ResponseEntity<?> deleteStore(@PathVariable Long idTienda) {
+    public ResponseEntity<?> deleteStore(@PathVariable Integer idTienda) {
         try {
             this.tiendaService.deleteById(idTienda);
             return ResponseEntity.noContent().build();

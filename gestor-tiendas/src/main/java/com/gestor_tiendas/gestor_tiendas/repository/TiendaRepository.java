@@ -9,7 +9,7 @@ import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 
 @Repository
-public interface TiendaRepository extends JpaRepository<Tienda, Long>{
+public interface TiendaRepository extends JpaRepository<Tienda, Integer>{
 
     /*  CRUD (Create, Read, Update, Delete):
     o save(S entity): Guarda una entidad.

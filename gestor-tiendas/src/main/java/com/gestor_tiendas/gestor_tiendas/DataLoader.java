@@ -2,6 +2,7 @@ package com.gestor_tiendas.gestor_tiendas;
 
 import net.datafaker.Faker;
 
+import java.time.LocalTime;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,14 @@ public class DataLoader implements CommandLineRunner {
         for (int i = 0; i < 50; i++) {
             Tienda tienda = new Tienda();
 
-            tienda.setNombre("EcoMarket" + faker.company().name());
+            tienda.setNombre("EcoMarket " + faker.company().name());
             tienda.setCiudad(faker.address().city());
             tienda.setDireccion(faker.address().streetAddress());
             tienda.setTelefono(faker.number().numberBetween(10000000, 99999999));
             tienda.setCorreo(faker.internet().emailAddress());
             
-            // horaApertura
-            // horaCierre
+            tienda.setHoraApertura(LocalTime.of(faker.number().numberBetween(8, 12), 0)); // Abren desde 8 a 12 hrs en punto (0)
+            tienda.setHoraCierre(LocalTime.of(faker.number().numberBetween(15, 21), 0)); // cierran desde 15 a 21 hrs en punto (0)
             
             int codRegion = faker.number().numberBetween(1, 16);    // GENERA codigo aleatorio para la region
             Region region = new Region();       // Crea una nueva instancia/objeto de Region, ya que no tengo repositorio, servicio, de Region
@@ -46,7 +47,6 @@ public class DataLoader implements CommandLineRunner {
             tienda.setRegion(region);   // tukiiiiiii
 
             tiendaRepository.save(tienda);
-
 
         }
 

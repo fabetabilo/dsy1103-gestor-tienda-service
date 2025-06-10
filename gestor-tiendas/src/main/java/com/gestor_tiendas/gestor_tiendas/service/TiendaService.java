@@ -18,7 +18,7 @@ public class TiendaService {
     @Autowired
     private TiendaRepository tiendaRepository;
 
-    public Tienda findById(long idTiendaBuscar) {
+    public Tienda findById(Integer idTiendaBuscar) {
         return this.tiendaRepository.findById(idTiendaBuscar).get();
 
     }
@@ -37,7 +37,7 @@ public class TiendaService {
         
     }
 
-    public void deleteById(Long idTiendaBorrar) {
+    public void deleteById(Integer idTiendaBorrar) {
         this.tiendaRepository.deleteById(idTiendaBorrar);
         
     }
@@ -45,7 +45,7 @@ public class TiendaService {
 
     // Metodos utiles(?)
 
-    public boolean existsById(Long idTiendaValidar) {
+    public boolean existsById(Integer idTiendaValidar) {
         // existsById (metodo boolean) Retorna true si existe
         return this.tiendaRepository.existsById(idTiendaValidar);
 
