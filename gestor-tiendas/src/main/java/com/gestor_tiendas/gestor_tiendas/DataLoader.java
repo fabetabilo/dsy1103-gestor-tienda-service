@@ -3,7 +3,6 @@ package com.gestor_tiendas.gestor_tiendas;
 import net.datafaker.Faker;
 
 import java.time.LocalTime;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

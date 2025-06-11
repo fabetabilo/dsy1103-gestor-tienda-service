@@ -7,6 +7,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 import com.gestor_tiendas.gestor_tiendas.repository.TiendaRepository;
 import com.gestor_tiendas.gestor_tiendas.service.TiendaService;
@@ -41,8 +43,12 @@ public class TiendaServiceTest {
     @Test
     public void testFindById() {
         // Long id = 23;
-        Integer id = 4;
-        Tienda tienda = new Tienda();
+        Integer id = 1;
+        
+        Region region = new Region();
+
+        Tienda tienda = new Tienda(id, "EcoMarket Casa Matriz", "Santiago", "Villavicencio 456", 234500250, "contactolastarria@ecomarket.cl", LocalTime.of(8, 0), LocalTime.of(20, 0), region);
+
         // comportamiento del mock: cuando se use findById con "id", devuelve un opcional de tienda
         when(tiendaRepository.findById(id)).thenReturn(Optional.of(tienda));
 
@@ -56,19 +62,22 @@ public class TiendaServiceTest {
     @Test
     public void testSave() {
 
-        Tienda tienda = new Tienda();
+        // necesita una region D:
+        Region region = new Region();
+
+        Tienda tienda = new Tienda(1, "EcoMarket Casa Matriz", "Santiago", "Villavicencio 456", 234500250, "contactolastarria@ecomarket.cl", LocalTime.of(8, 0), LocalTime.of(20, 0), region);
         when(tiendaRepository.save(tienda)).thenReturn(tienda);
         Tienda saved = tiendaService.saveTienda(tienda);
 
         assertNotNull(saved);
-        assertEquals("EcoMarket Casa matriz", saved.getNombre());
+        assertEquals("EcoMarket Casa Matriz", saved.getNombre());
 
     }
 
     @Test
     public void testDeleteById() {
 
-        Integer id = 9;
+        Integer id = 1;
         // mock: no hace nada al usar deleteById()
         doNothing().when(tiendaRepository).deleteById(id);
         tiendaService.deleteById(id);
