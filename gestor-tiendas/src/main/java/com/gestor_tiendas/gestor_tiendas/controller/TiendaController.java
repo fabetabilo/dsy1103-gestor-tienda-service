@@ -19,8 +19,17 @@ import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
 import com.gestor_tiendas.gestor_tiendas.service.TiendaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
 @RestController
 @RequestMapping("/api/v1/tienda")
+@Tag(name = "Tiendas", description = "Operaciones con tiendas")
 public class TiendaController {
 
     @Autowired
@@ -35,12 +44,19 @@ public class TiendaController {
      */
 
 
-    /**
+    /** GET /api/v1/tienda
      * Metodo que retorna todas las tiendas existentes
      * 
      * @return ResponseEntity Lista sin contenido (HTTP 204 No Content), o ResponseEntity de Lista de tiendas existentes (HTTP 200 OK)
      */
     @GetMapping
+    @Operation(summary = "Obtener todas las tiendas", description = "Obtiene lista con todas las tiendas existentes")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tiendas existentes encontradas con exito",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = Tienda.class))),
+        @ApiResponse(responseCode = "204", description = "Tiendas no encontradas")
+    }) 
     public ResponseEntity<List<Tienda>> getAllStores() {
         List<Tienda> listaTiendas = this.tiendaService.findAll();
         if (listaTiendas.isEmpty()) {
@@ -51,13 +67,20 @@ public class TiendaController {
 
     }
 
-    /**
+    /** GET /api/v1/tienda/{idTienda}
      * Metodo que retorna una tienda por su id
      * 
      * @param idTienda el id de la tienda que se busca
      * @return ResponseEntity tienda buscada (HTTP 200 OK), o ResponseEntity la tienda no existe (HTTP 404 Not Found)
      */
     @GetMapping("/{idTienda}")
+    @Operation(summary = "Obtener tienda por id", description = "Obtiene una tienda por codigo identificador")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tienda encontrada con exito",
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = Tienda.class))),
+        @ApiResponse(responseCode = "404", description = "Tienda no encontrada")
+    })
     public ResponseEntity<Tienda> getStoreById(@PathVariable Integer idTienda) {
         try {
             Tienda tiendaGet = this.tiendaService.findById(idTienda);
@@ -69,7 +92,7 @@ public class TiendaController {
 
     }
 
-    /**
+    /** POST /api/v1/tienda
      * Metodo que crea una nueva tienda
      * 
      * @RequestBody JSON cuerpo del objeto tienda, sin id
@@ -77,6 +100,13 @@ public class TiendaController {
      * @return ResponseEntity tienda creada (HTTP 201 Created)
      */
     @PostMapping
+    @Operation(summary = "Crear una nueva tienda", description = "Crea una nuevo recurso tienda")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Tienda creada con exito",
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = Tienda.class))),
+        @ApiResponse(responseCode = "400", description = "No se pudo crear la tienda, los datos proporcionados son incorrectos")
+    })
     public ResponseEntity<Tienda> saveNewStore(@RequestBody Tienda tienda) {
         try {
             Tienda tiendaPost = this.tiendaService.saveTienda(tienda);
@@ -90,19 +120,24 @@ public class TiendaController {
     }
 
 
-    /**
+    /** POST /api/v1/tienda/bulk
      * Metodo bulk que crea muchas tiendas a la vez
      * bulk postmapping se refiere a cargar, guardar volumenes de datos.
      * 
      * @RequestBody JSON cuerpo de tiendas a agregar
      * @param listaTiendas arreglo de tiendas a guardar
-     * @return ResponseEntity tiendas creadas (HTTP 20O OK)
+     * @return ResponseEntity tiendas creadas (HTTP 201 OK)
      */
     @PostMapping("/bulk")
+    @Operation(summary = "Crear muchas tiendas", description = "Crea muchas tiendas a la vez")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Tiendas creadas con exito"),
+        @ApiResponse(responseCode = "400", description = "No se pudo crear las tiendas, los datos proporcionados son incorrectos")
+    })
     public ResponseEntity<List<Tienda>> saveAllStores(@RequestBody List<Tienda> listaTiendas) {
         try {
             List<Tienda> tiendasGuardadas = this.tiendaService.saveAllTiendas(listaTiendas);
-            return ResponseEntity.ok(tiendasGuardadas);
+            return ResponseEntity.status(HttpStatus.CREATED).body(tiendasGuardadas);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -110,7 +145,7 @@ public class TiendaController {
         }
     }
 
-    /**
+    /** PUT /api/v1/tienda/{idTienda}
      * Metodo para modificar los detalles de una tienda
      * 
      * @param idTienda id de la tienda que se quiere modificar
@@ -118,36 +153,56 @@ public class TiendaController {
      * @return ResponseEntity tienda modificada con exito (HTTP 200 OK), o ResponseEntity contenido no encontrado (HTTP 404 Not Found)
      */
     @PutMapping("/{idTienda}")
-    public ResponseEntity<Tienda> putStore(@PathVariable Integer idTienda, @RequestBody Tienda tienda) {
+    @Operation(summary = "Actualizar datos de una tienda", description = "Actualiza una tienda existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tienda actualizada exitosamente",
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = Tienda.class))),
+        @ApiResponse(responseCode = "404", description = "Tienda no encontrada"),
+        @ApiResponse(responseCode = "400", description = "No se puedo actualizar tienda, los datos proporcionados son erroneos")
+    })
+    public ResponseEntity<Tienda> putStore(@PathVariable Integer idTienda, @RequestBody Tienda tienda ) {
         try {
-            Tienda tiendaPut = this.tiendaService.findById(idTienda);
-            tiendaPut.setIdTienda(idTienda);
-            tiendaPut.setNombre(tienda.getNombre());
-            tiendaPut.setCiudad(tienda.getCiudad());
-            tiendaPut.setDireccion(tienda.getDireccion());
-            tiendaPut.setTelefono(tienda.getTelefono());
-            tiendaPut.setCorreo(tienda.getCorreo());
-            tiendaPut.setHoraApertura(tienda.getHoraApertura());
-            tiendaPut.setHoraCierre(tienda.getHoraCierre());
+            // Verifica primero, que la tienda a actualizar exista
+            if (this.tiendaService.existsById(idTienda)) {
+                Tienda tiendaPut = this.tiendaService.findById(idTienda);
+                tiendaPut.setIdTienda(idTienda);
+                tiendaPut.setNombre(tienda.getNombre());
+                tiendaPut.setCiudad(tienda.getCiudad());
+                tiendaPut.setDireccion(tienda.getDireccion());
+                tiendaPut.setTelefono(tienda.getTelefono());
+                tiendaPut.setCorreo(tienda.getCorreo());
+                tiendaPut.setHoraApertura(tienda.getHoraApertura());
+                tiendaPut.setHoraCierre(tienda.getHoraCierre());
+                // Se debe guardar esa tiendaPut ("tienda actualizada")
+                this.tiendaService.saveTienda(tiendaPut);
+                return ResponseEntity.ok(tienda);
 
-            // Se debe guardar esa tiendaPut ("tienda actualizada")
-            this.tiendaService.saveTienda(tiendaPut);
-
-            return ResponseEntity.ok(tienda);
+            } else {
+                // si no existe, da codigo 404 NOT FOUND
+                return ResponseEntity.notFound().build();
+            }
 
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            // en caso que el cuerpo de la solicitud sea erroneo
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
         }
 
     }
 
-    /**
+    /** DELETE /api/v1/tienda/{idTienda}
      * Metodo para borrar una tienda
      * 
      * @param idTienda id de la tienda a borrar
      * @return ResponseEntity sin contenido (HTTP 204 No Content) tienda borrada con exito, o ResponseEntity contenido no encontrado (HTTP 404 Not Found) tienda no existe
      */
     @DeleteMapping("/{idTienda}")
+    @Operation(summary = "Eliminar una tienda", description = "Elimina una tienda por su codigo identificador")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tienda eliminada con exito"),
+        @ApiResponse(responseCode = "404", description = "Tienda no encontrada")
+    })
     public ResponseEntity<?> deleteStore(@PathVariable Integer idTienda) {
         try {
             this.tiendaService.deleteById(idTienda);
@@ -162,7 +217,7 @@ public class TiendaController {
 
     // Adicionales
 
-    /**
+    /** GET /api/v1/tienda/cantidad
      * Metodo que cuenta el total de tiendas existentes
      * 
      * @return Long del numero de tiendas
@@ -173,7 +228,7 @@ public class TiendaController {
     }
 
 
-    /**
+    /** GET /api/v1/tienda/ciudad
      * Metodo que busca tiendas por ciudad, ignorando mayusculas, minusculas y errores parciales de busqueda
      * (ej: http://busqueda/api/v1/tiendas/ciudad?ciudad=santiago)
      * 
@@ -181,6 +236,11 @@ public class TiendaController {
      * @return ResponseEntity Lista de tiendas existentes en ciudad (HTTP 200 OK), o ResponseEntity Lista sin contenido (HTTP 204 No Content)
      */
     @GetMapping("/ciudad")
+    @Operation(summary = "Obtener tiendas por ciudad", description = "Obtiene lista de tiendas por texto completo o parcial de una ciudad")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tiendas encontradas con exito"),
+        @ApiResponse(responseCode = "204", description = "Tiendas no encontradas, no existen tiendas para la ciudad buscada")
+    })
     public ResponseEntity<List<Tienda>> getStoresByCity(@RequestParam(name = "ciudad") String ciudad) {
         List<Tienda> tiendasCiudad = this.tiendaService.findByCiudadIgnoringCase(ciudad);
         if (tiendasCiudad.isEmpty()) {
@@ -192,13 +252,18 @@ public class TiendaController {
 
     }
 
-    /**
+    /** GET /api/v1/tienda/region/{codigoRegion}
      * Metodo que busca tiendas por region a la que pertenecen
      * 
      * @param codigoRegion codigo de la region a buscar (Codigos unicos territoriales, Chile)
      * @return ResponseEntity de Lista de tiendas que pertenecen a la region (HTTP 200 OK), o ResponseEntity sin contenido (HTTP 204 No Content)
      */
     @GetMapping("/region/{codigoRegion}")
+    @Operation(summary = "Obtener tiendas por region", description = "Obtiene lista de tiendas de una region en especifico, por codigo de region")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tiendas encontradas con exito"),
+        @ApiResponse(responseCode = "204", description = "Tiendas no encontradas, no existen tiendas para la region buscada")
+    })
     public ResponseEntity<List<Tienda>> getStoresByRegion(@PathVariable Integer codigoRegion) {
         Region region = new Region();
         region.setCodigoRegion(codigoRegion);
@@ -211,29 +276,34 @@ public class TiendaController {
     }
 
 
-    /**
+    /** PUT /api/v1/tienda/{idTienda}/horario
      * Metodo para modificar exclusivamente el horario de apertura y cierre de una tienda
      * 
      * @param idTienda id de la tienda que se quiere modificar horas
      * @param tienda JSON cuerpo de las nuevas horas
-     * @return ResponseEntity tienda con horarios actualizados (HTTP 200 OK), o ResponseEntity tienda no encontrada (HTTP 404 Not Found)
+     * @return ResponseEntity tienda con horarios actualizados (HTTP 200 OK), ResponseEntity tienda no encontrada (HTTP 404 Not Found), o ResponseEntity solicitud erronea (HTTP 400 Bad Request)
      */
     @PutMapping("/{idTienda}/horario")
+    @Operation(summary = "Actualizar horario de apertura o cierre de tienda", description = "Modifica exclusivamente los horarios de una tienda existente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Horario de tienda actualizado con exito"),
+        @ApiResponse(responseCode = "404", description = "Tienda no encontrada"),
+        @ApiResponse(responseCode = "400", description = "No se pudo actualizar horario, los datos proporcionados son erroneos")
+    })
     public ResponseEntity<Tienda> putStoreHorario(@PathVariable Integer idTienda, @RequestBody Tienda tienda) {
         try {
-            // primero busca la tienda del idTienda
-            Tienda tiendaPut = this.tiendaService.findById(idTienda);
+            if (this.tiendaService.existsById(idTienda)) {
+                Tienda tiendaPut = this.tiendaService.findById(idTienda);
+                tiendaPut.setHoraApertura(tienda.getHoraApertura());
+                tiendaPut.setHoraCierre(tienda.getHoraCierre());
 
-            tiendaPut.setHoraApertura(tienda.getHoraApertura());
-            tiendaPut.setHoraCierre(tienda.getHoraCierre());
-
-            this.tiendaService.saveTienda(tiendaPut);
-
-            return ResponseEntity.ok(tiendaPut);
-
+                this.tiendaService.saveTienda(tiendaPut);
+                return ResponseEntity.ok(tiendaPut);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
     }
