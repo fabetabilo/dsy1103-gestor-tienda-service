@@ -1,22 +1,7 @@
-USE db_gestor_tienda;
+-- este INSERT INTO, inserta las tiendas principales y actuales de EcoMarket SPA
+-- la tabla TIENDA es creada tras iniciar la aplicacion por primera vez (update)
 
-INSERT INTO region (codigo_region, nombre_region) VALUES
-(1, 'Región de Tarapacá'),
-(2, 'Región de Antofagasta'),
-(3, 'Región de Atacama'),
-(4, 'Región de Coquimbo'),
-(5, 'Región de Valparaíso'),
-(6, 'Región del Libertador Gral. Bernardo O.Higgins'),
-(7, 'Región del Maule'),
-(8, 'Región del Biobío'),
-(9, 'Región de la Araucanía'),
-(10, 'Región de los Lagos'),
-(11, 'Región de Aisén del Gral. Carlos Ibanez del Campo'),
-(12, 'Región de Magallanes y de la Antártica Chilena'),
-(13, 'Región Metropolitana de Santiago'),
-(14, 'Región de Los Ríos'),
-(15, 'Región de Arica y Parinacota'),
-(16, 'Región de Nuble');
+USE db_gestor_tienda;
 
 INSERT INTO tienda (ciudad, correo, direccion, hora_apertura, hora_cierre, nombre, telefono, codigo_region) VALUES 
 (
