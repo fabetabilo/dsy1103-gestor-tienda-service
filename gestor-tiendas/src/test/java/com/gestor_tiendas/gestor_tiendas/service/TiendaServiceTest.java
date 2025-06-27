@@ -1,4 +1,4 @@
-package com.gestor_tiendas.gestor_tiendas;
+package com.gestor_tiendas.gestor_tiendas.service;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.gestor_tiendas.gestor_tiendas.model.Region;
 import com.gestor_tiendas.gestor_tiendas.model.Tienda;
@@ -22,9 +23,10 @@ import com.gestor_tiendas.gestor_tiendas.repository.TiendaRepository;
 import com.gestor_tiendas.gestor_tiendas.service.TiendaService;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class TiendaServiceTest {
 
-    @Autowired
+ @Autowired
     private TiendaService tiendaService;
 
     @MockBean
@@ -42,16 +44,11 @@ public class TiendaServiceTest {
 
     @Test
     public void testFindById() {
-        // Long id = 23;
         Integer id = 1;
-        
         Region region = new Region();
-
         Tienda tienda = new Tienda(id, "EcoMarket Casa Matriz", "Santiago", "Villavicencio 456", 234500250, "contactolastarria@ecomarket.cl", LocalTime.of(8, 0), LocalTime.of(20, 0), region);
-
         // comportamiento del mock: cuando se use findById con "id", devuelve un opcional de tienda
         when(tiendaRepository.findById(id)).thenReturn(Optional.of(tienda));
-
         Tienda found = tiendaService.findById(id);
 
         assertNotNull(found);
@@ -61,7 +58,6 @@ public class TiendaServiceTest {
 
     @Test
     public void testSave() {
-
         // necesita una region D:
         Region region = new Region();
 
@@ -76,14 +72,13 @@ public class TiendaServiceTest {
 
     @Test
     public void testDeleteById() {
-
         Integer id = 1;
         // mock: no hace nada al usar deleteById()
         doNothing().when(tiendaRepository).deleteById(id);
         tiendaService.deleteById(id);
-
         // Verifica que el metodo del repositorio se haya llamado UNA VEZ con el codigo 
         verify(tiendaRepository, times(1)).deleteById(id);
 
     }
+
 }

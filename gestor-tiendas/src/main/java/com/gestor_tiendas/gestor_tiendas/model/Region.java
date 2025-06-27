@@ -1,5 +1,6 @@
 package com.gestor_tiendas.gestor_tiendas.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Entidad que representa regiones de Chile")
 public class Region {
 
     /* Nota
@@ -22,9 +24,11 @@ public class Region {
      */
     @Id
     @Column(columnDefinition = "INT(3)")
+    @Schema(description = "Codigo CUT (codigo unico territorial)", example = "13")
     private Integer codigoRegion;              // segun CODIGOS UNICOS TERRITORIALES, Chile, 3 digitos
 
     @Column(length = 70, nullable = false)
+    @Schema(description = "Nombre de la region", example = "Region Metropolitana de Santiago")
     private String nombreRegion;
 
     
