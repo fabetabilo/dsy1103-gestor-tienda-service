@@ -26,7 +26,7 @@ jobs:
               uses: burnett01/rsync-deployments@7.0.2
               with:
                 switches: "-avz --delete -e 'ssh -i ${{ secrets.KEY_PAIR }} -p ${{ secrets.PORT }} -o StrictHostKeyChecking=no -o LogLevel=ERROR'"
-                path: "./gestor-tiendas" # es la carpeta raiz del proyecto, el todo
+                path: "./" # es la carpeta raiz del proyecto, el todo
                 remote_host: ${{ secrets.IP_SERVER }}
                 remote_user: ${{ secrets.USERNAME }}
                 remote_path: "/home/ubuntu/fs1001/"
