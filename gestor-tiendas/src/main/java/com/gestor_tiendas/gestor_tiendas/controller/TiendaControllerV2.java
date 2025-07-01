@@ -26,7 +26,7 @@ import com.gestor_tiendas.gestor_tiendas.service.TiendaService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
-
+//v2
 @RestController
 @RequestMapping("/api/v2/tienda")
 public class TiendaControllerV2 {
