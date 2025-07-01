@@ -13,7 +13,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(new Info()
                                 .title("API 2025 Gestion de Tiendas")
-                                .version("1.0")
+                                .version("2.0")
                                 .description("Documentacion de API para sistema de gestion de tiendas")
         );
     }
