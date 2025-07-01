@@ -95,12 +95,13 @@
 			<version>2.6.0</version>
 		</dependency>
 
-		<!-- dotenv (libreria de manejo de variables de entorno REVISAR VERSIONES en Maven Central) -->
+		<!-- dotenv (libreria de manejo de variables de entorno REVISAR VERSIONES en Maven Central)
 		<dependency>
 			<groupId>io.github.cdimascio</groupId>
 			<artifactId>dotenv-java</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		-->
 
 		<!-- HATEOAS -->
 		<dependency>
