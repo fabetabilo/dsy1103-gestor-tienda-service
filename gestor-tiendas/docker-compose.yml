@@ -9,3 +9,5 @@ services:
       # der: puerto expuesto del contenedor, "donde la app escucha"
       - "8080:8080"
     command: ["java","-jar","app.jar"]
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
