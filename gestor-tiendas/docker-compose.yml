@@ -2,7 +2,10 @@ services:
   java:
     build:
       context: .
-      dockerfile: dockerfile
+      # ruta al Dockerfile (Por defecto es "Dockerfile") (Por eso "Dockerfile" va con "D" mayuscula)
+      # dockerfile: Dockerfile
     ports:
+      # izq: puerto del host (servidor, ec2, etc)
+      # der: puerto expuesto del contenedor, "donde la app escucha"
       - "8080:8080"
     command: ["java","-jar","app.jar"]
