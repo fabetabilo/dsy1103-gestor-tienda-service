@@ -27,7 +27,8 @@ public class DataLoader implements CommandLineRunner {
         Faker faker = new Faker();
 
         // Generar tiendas
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
+            
             Tienda tienda = new Tienda();
 
             tienda.setNombre("EcoMarket " + faker.company().name());

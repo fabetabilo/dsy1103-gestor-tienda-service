@@ -51,7 +51,7 @@ public class TiendaControllerV2 {
         return this.assembler.toModel(tienda);
     }
 
-    @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    @PostMapping(produces = MediaTypes.HAL_JSON_VALUE) // HAL, tipo de recurso
     public ResponseEntity<EntityModel<Tienda>> saveTienda(@RequestBody Tienda tienda) {
         Tienda nuevaTienda = this.tiendaService.saveTienda(tienda);
         return ResponseEntity.created(linkTo(methodOn(TiendaControllerV2.class).getTiendaById(nuevaTienda.getIdTienda())).toUri())

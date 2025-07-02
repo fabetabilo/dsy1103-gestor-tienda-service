@@ -48,6 +48,7 @@ public class TiendaServiceTest {
         Region region = new Region();
         Tienda tienda = new Tienda(id, "EcoMarket Casa Matriz", "Santiago", "Villavicencio 456", 234500250, "contactolastarria@ecomarket.cl", LocalTime.of(8, 0), LocalTime.of(20, 0), region);
         // comportamiento del mock: cuando se use findById con "id", devuelve un opcional de tienda
+        
         when(tiendaRepository.findById(id)).thenReturn(Optional.of(tienda));
         Tienda found = tiendaService.findById(id);
 
